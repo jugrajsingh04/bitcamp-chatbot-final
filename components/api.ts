@@ -7,8 +7,8 @@ export default function createChatBoxAPI(options: { webhooks: string[] }) {
   return async function (req: NextApiRequest, res: NextApiResponse) {
     const method = req.method;
 
-    const api = req.query.chatbox[0];
-    const chatId = req.query.chatbox[1];
+    const api = req.query.chatbox?.[0];
+    const chatId = req.query.chatbox?.[1];
     const host = `http://${req.headers.host}`;
 
     try {

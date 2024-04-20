@@ -1,0 +1,8 @@
+{
+  "/_app": "pages/_app.js",
+  "/api/chatbox/[...chatbox]": "pages/api/chatbox/[...chatbox].js",
+  "/chat/[id]": "pages/chat/[id].js",
+  "/": "pages/index.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js"
+}
