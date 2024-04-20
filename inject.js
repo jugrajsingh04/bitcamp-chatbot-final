@@ -3,14 +3,15 @@
     if (document.getElementById('chatbot-iframe-container')) return;
 
     var iframe = document.createElement('iframe');
-    iframe.style.background = "white";
+    iframe.style.background = "transparent"; // Ensure background is transparent
     iframe.style.border = "none";
-    iframe.style.height = "400px";
-    iframe.style.width = "300px";
+    iframe.style.height = "100vh";
+    iframe.style.width = "100%";
     iframe.style.position = "fixed";
-    iframe.style.bottom = "20px";
-    iframe.style.right = "20px";
-    iframe.style.zIndex = "1000000"; // Ensures the iframe is on top of most elements
+    iframe.style.bottom = "0px";
+    iframe.style.right = "0px";
+    iframe.style.zIndex = "1000000";
+    iframe.allowTransparency = "true"; // Allow transparency
     iframe.src = chrome.runtime.getURL("chatbot.html");
     iframe.id = "chatbot-iframe-container";
 

@@ -4,93 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-        #chatbox {
-            flex: 1;
-            background: white;
-            overflow: auto;
-            margin: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-        #userInput {
-            display: flex;
-            padding: 10px;
-        }
-        #userInput input {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            margin-right: 10px;
-        }
-        #userInput button {
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        #userInput button:hover {
-            background-color: #0056b3;
-        }
-        .message {
-            margin: 5px;
-            padding: 10px;
-            background-color: #e9e9e9;
-            border-radius: 8px;
-            width: fit-content;
-            max-width: 80%;
-        }
-        .user {
-            align-self: flex-end;
-            background-color: #007BFF;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="styles/chatbot-body.css">
 </head>
 <body>
-    <div id="chatbox"></div>
-    <div id="userInput">
-        <input type="text" id="textInput" placeholder="Type your message here...">
-        <button onclick="sendMessage()">Send</button>
+
+    <div class="chatbox-widget-root">
+        <div id="chatbox-widget-modal" class="chatbox-widget-modal" style="display: none;"> <!-- Initially hidden -->
+            <header class="chatbox-widget-header">
+                <h2>Chat</h2>
+                <p>Hi 👋<br>How can I help you today?</p>
+            </header>
+            <div class="chatbox-chat">
+                <!-- Chat messages will go here -->
+            </div>
+            <form class="chatbox-form">
+                <input type="text" class="chatbox-form-message" placeholder="Type your message here...">
+                <button type="submit" class="chatbox-form-submit">Send</button>
+            </form>
+        </div>
+        <button class="chatbox-widget-trigger-button">
+            Toggle Chat
+        </button>
     </div>
 
-    <script>
-        function sendMessage() {
-            var input = document.getElementById('textInput');
-            var message = input.value.trim();
-            if (message) {
-                displayMessage(message, 'user');
-                // Here you could add your chatbot response logic
-                displayMessage('Echo: ' + message, 'bot'); // This is a placeholder
-            }
-            input.value = ''; // Clear input box
-            input.focus(); // Keep focus on input
-        }
-
-        function displayMessage(message, sender) {
-            var chatbox = document.getElementById('chatbox');
-            var msgDiv = document.createElement('div');
-            msgDiv.classList.add('message');
-            if (sender === 'user') {
-                msgDiv.classList.add('user');
-            }
-            msgDiv.textContent = message;
-            chatbox.appendChild(msgDiv);
-            chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
-        }
-    </script>
+    <script src="scripts/chatbot_script.js"></script>
 </body>
 </html>
