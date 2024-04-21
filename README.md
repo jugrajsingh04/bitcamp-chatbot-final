@@ -16,33 +16,17 @@ First, you need to clone the repository to your local machine. Open your termina
 ```bash
 git clone https://github.com/jugrajsingh04/bitcamp-chatbot-final.git
 ```
-### 2. Install Dependencies
 
-Navigate to the cloned directory and install the necessary npm packages:
-```bash
-cd bitcamp-chatbot-final
-npm install
-```
-### 3. Build the Extension
-
-If the project requires a build step (e.g., using webpack or tsc), run the build command:
-
-```bash
-npm run build
-```
-
-This command should create a dist directory containing the build output, which can be loaded into Chrome.
-
-### 4. Load the Extension into Chrome
+### 2. Load the Extension into Chrome
 To load the extension into Chrome, follow these steps:
 
 * Open Chrome and go to the Extensions page by navigating to chrome://extensions/.
 * Enable "Developer mode" at the top right of the page.
-* Click on "Load unpacked" and select the dist directory from your cloned repository. If there is no dist directory, select the directory containing the manifest.json file.
+* Click on "Load unpacked" and select the cloned repository.
 ## 🚀 Usage
 After loading the extension, you should see the PocketBot Chatbot icon in your Chrome toolbar. Click on this icon to interact with the chatbot. Enter your queries, and the chatbot will respond accordingly.
 
 ## 🤝 Contributing
-Contributions are welcome! Please feel free to submit pull requests or create issues for bugs and feature requests.
+Contributions are welcome! Please feel free to submit pull requests or create issues for bugs and feature requests.w
 
 
