@@ -26,7 +26,7 @@
     },
     "web_accessible_resources": [
         {
-          "resources": ["images/icon16.png", "images/icon48.png", "images/icon128.png", "chatbot.html"],
+            "resources": ["images/icon16.png", "images/icon48.png", "images/icon128.png", "chatbot.html", "chatbot-widget-trigger-button.html", "chatbot-widget-call-button.html", "chatbot-widget-modal.html"],
           "matches": ["<all_urls>"]
         }
       ]

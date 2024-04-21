@@ -1,22 +1,27 @@
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Chatbot script loaded');
-    var toggleButton = document.querySelector('.chatbox-widget-trigger-button');
-    var chatModal = document.getElementById('chatbox-widget-modal');
+document.addEventListener('DOMContentLoaded', function () {
+    var form = document.querySelector('.chatbox-form');
+    var messageInput = document.querySelector('.chatbox-form-message');
+    var chatWindow = document.querySelector('.chatbox-chat');
 
-    toggleButton.addEventListener('click', function() {
-        console.log('Toggle chatbot modal');
-        if (chatModal.style.display === 'none') {
-            chatModal.style.display = 'grid'; // Show the modal
-        } else {
-            chatModal.style.display = 'none'; // Hide the modal
+    form.addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevent the form from submitting in the traditional way
+        var userMessage = messageInput.value.trim(); // Get user input and trim any extra whitespace
+
+        if (userMessage) { // Ensure the message isn't empty
+            // Create a new div element for the user's message
+            var messageDiv = document.createElement('div');
+            messageDiv.textContent = userMessage;
+            messageDiv.className = 'chatbox-message chatbox-user-message'; // Add class for styling
+
+            // Append the user's message to the chat window
+            chatWindow.appendChild(messageDiv);
+
+            // Optionally clear the input after sending
+            messageInput.value = '';
+
+            // Scroll to the bottom of the chat window
+            chatWindow.scrollTop = chatWindow.scrollHeight;
         }
-    });
-
-    // Add this event listener to handle form submissions
-    var chatForm = document.querySelector('.chatbox-form');
-    chatForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent form from submitting the traditional way
-        sendMessage(); // Call your existing sendMessage function
     });
 });
 
