@@ -1,5 +1,5 @@
 document.addEventListener('click', function () {
-    console.log('click');
+    console.log('click trigger');
     window.parent.postMessage({ type: 'toggleModal' }, '*'); // Adjust the target origin in production
 });
 

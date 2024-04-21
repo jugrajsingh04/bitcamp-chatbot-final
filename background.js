@@ -25,7 +25,7 @@ chrome.action.onClicked.addListener((tab) => {
             target: { tabId: tab.id },
             files: ['inject.js']
         }).then(() => {
-            chrome.tabs.sendMessage(tab.id, { action: "toggleChatbot", assistantId });
+            chrome.tabs.sendMessage(tab.id, { action: "toggleChatbot", assistantId, url: tab.url});
         }).catch(error => {
             console.error('Failed to inject script: ', error);
             chrome.notifications.create({
@@ -46,11 +46,12 @@ chrome.action.onClicked.addListener((tab) => {
         } else {
             // Dummy API call to fetch assistant ID
             console.log(domain)
-            fetch(`https://bitcamp-chatbot-api-zywa.vercel.app/api/scrape-site?url=${domain}`)
+            console.log(cache)
+            fetch(`https://bitcamp-chatbot-api-smoky.vercel.app/api/scrape-site?url=${url}`)
                 .then(response => response.json())
                 .then(data => {
-                    const assistantId = data.message; // Assuming the API returns { message: "someAssistantId" }
-                    console.error(`Assistant ID for domain ${domain}:`, assistantId);
+                    console.log(data);
+                    const assistantId = data.assistantId; // Assuming the API returns { message: "someAssistantId" }
                     cache[domain] = assistantId;
                     chrome.storage.local.set({ [cacheKey]: cache }); // Update cache
                     injectAndSendMessage(assistantId);

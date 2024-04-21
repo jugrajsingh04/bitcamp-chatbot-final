@@ -2,6 +2,22 @@ document.addEventListener('DOMContentLoaded', function () {
     var form = document.querySelector('.chatbox-form');
     var messageInput = document.querySelector('.chatbox-form-message');
     var chatWindow = document.querySelector('.chatbox-chat');
+    // get current tab url
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        var tab = tabs[0];
+        console.log(tab.url);
+        updateChatHeader(tab.url);  
+    });
+
+
+    function updateChatHeader(url) {
+        const header = document.querySelector('.chatbox-widget-header h2');
+        console.log("hi");
+        console.log(header);
+        if (header) {
+            header.textContent = `Chat with ${new URL(url).hostname}`; // Display the domain name
+        }
+    }
 
     form.addEventListener('submit', function (e) {
         e.preventDefault(); // Prevent the form from submitting in the traditional way
@@ -41,7 +57,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 messages: [
                     {role: "user", content: userMessage}
                 ]
-            }
+            },
+            tools: [
+                {
+                type: "file_search"
+                }
+            ]
         };
 
         fetch('https://api.openai.com/v1/threads/runs', {

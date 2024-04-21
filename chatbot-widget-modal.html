@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot</title>
     <link rel="stylesheet" type="text/css" href="styles/chatbot-body.css">
 </head>
+
 <body>
 
-    <div class="chatbox-widget-root">
-        <div id="chatbox-widget-modal" class="chatbox-widget-modal"> <!-- Initially hidden -->
-            <header class="chatbox-widget-header">
-                <h2>Chat</h2>
-                <p>Hi 👋<br>How can I help you today?</p>
-            </header>
-            <div class="chatbox-chat">
-                <!-- Chat messages will go here -->
-            </div>
-            <form class="chatbox-form">
-                <input type="text" class="chatbox-form-message" placeholder="Type your message here...">
-                <button type="submit" class="chatbox-form-submit">Send</button>
-            </form>
+    <div id="chatbox-widget-modal" class="chatbox-widget-modal"> <!-- Initially hidden -->
+        <header class="chatbox-widget-header">
+            <h2>Chat</h2>
+            <p>Hi 👋<br>How can I help you today?</p>
+        </header>
+        <div class="chatbox-chat">
+            <!-- Chat messages will go here -->
         </div>
+        <form class="chatbox-form">
+            <input type="text" class="chatbox-form-message" placeholder="Type your message here...">
+            <button type="submit" class="chatbox-form-submit">Send</button>
+        </form>
     </div>
 
     <script src="scripts/chatbot_script.js"></script>
 </body>
+
 </html>

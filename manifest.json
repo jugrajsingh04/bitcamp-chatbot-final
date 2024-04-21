@@ -26,10 +26,15 @@
     },
     "web_accessible_resources": [
         {
-          "resources": ["images/openChatBox.png", "images/closeChatBox.svg", "images/icon16.png", "images/icon48.png", "images/icon128.png", "chatbot.html", "chatbot-widget-trigger-button.html", "chatbot-widget-call-button.html", "chatbot-widget-modal.html"],
+          "resources": ["images/openChatBox.png", "images/closeChatBox.svg", "images/icon16.png", "images/icon48.png", "images/icon128.png", "chatbot.html", "chatbot-widget-trigger-button.html", "chatbot-widget-call-button.html", "chatbot-widget-modal.html", "chatbot-widget-email-modal.html", "chatbot-widget-email-button.html"],
           "matches": ["<all_urls>"]
         }
-      ]
+      ],
+      "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';",
+        "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+      }
+
       
 }
   
