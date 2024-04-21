@@ -4,13 +4,6 @@ Wish you had a reliable chatbot on every website? Enter PocketBot! With premier 
 
 This repository contains the source code for the PocketBot Chrome Extension. This extension enables users to interact with a chatbot directly from their Chrome browser. Below are the instructions on how to set up and use the extension.
 
-## 📋 Prerequisites
-
-Before you install the extension, make sure you have the following prerequisites installed:
-
-- **Node.js**: This extension requires Node.js to run the JavaScript code. Download and install Node.js from [nodejs.org](https://nodejs.org/).
-
-- **npm (Node Package Manager)**: npm is installed with Node.js, which helps in managing the packages required by the JavaScript code.
 
 ## 🛠 Installation Instructions
 
