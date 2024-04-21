@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch('https://api.openai.com/v1/threads/runs', {
             method: 'POST',
             headers: {
-                'Authorization': 'Bearer sk-proj-R9QOIVUw8hvRHVKg2LccT3BlbkFJKPPxBiJLPNjmlSgl4mVy', // Replace this with your actual API key
+                'Authorization': 'Bearer sk-proj-09LMSwWcafY2G4diOdrbT3BlbkFJleBlhF3VK6GJwOAYOVRS', // Replace this with your actual API key
                 'Content-Type': 'application/json',
                 'OpenAI-Beta': 'assistants=v2'
             },
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const interval = setInterval(() => {
             fetch(`https://api.openai.com/v1/threads/${threadId}/runs/${runId}`, {
                 headers: {
-                    'Authorization': 'Bearer sk-proj-R9QOIVUw8hvRHVKg2LccT3BlbkFJKPPxBiJLPNjmlSgl4mVy',
+                    'Authorization': 'Bearer sk-proj-09LMSwWcafY2G4diOdrbT3BlbkFJleBlhF3VK6GJwOAYOVRS',
                     'OpenAI-Beta': 'assistants=v2'
                 }
             })
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function fetchFinalMessage(threadId) {
         fetch(`https://api.openai.com/v1/threads/${threadId}/messages`, {
             headers: {
-                'Authorization': 'Bearer sk-proj-R9QOIVUw8hvRHVKg2LccT3BlbkFJKPPxBiJLPNjmlSgl4mVy',
+                'Authorization': 'Bearer sk-proj-09LMSwWcafY2G4diOdrbT3BlbkFJleBlhF3VK6GJwOAYOVRS',
                 'OpenAI-Beta': 'assistants=v2'
             }
         })
