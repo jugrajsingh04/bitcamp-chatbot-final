@@ -8,45 +8,106 @@ document.addEventListener('DOMContentLoaded', function () {
         var userMessage = messageInput.value.trim(); // Get user input and trim any extra whitespace
 
         if (userMessage) { // Ensure the message isn't empty
-            // Create a new div element for the user's message
-            var messageDiv = document.createElement('div');
-            messageDiv.textContent = userMessage;
-            messageDiv.className = 'chatbox-message chatbox-user-message'; // Add class for styling
+            // Fetch the domain from the tab URL
+            chrome.storage.local.get('currentDomain', function(data) {
+                var domain = data.currentDomain || 'defaultDomain'; // Handle the case where no domain is stored
+                console.log('Domain:', domain);
 
-            // Append the user's message to the chat window
-            chatWindow.appendChild(messageDiv);
+                // Retrieve assistant key from local storage
+                var cacheKey = 'assistantIdsCache';
+                chrome.storage.local.get([cacheKey], function(result) {
+                    const cache = result[cacheKey] || {};
+                    var assistantKey = cache[domain] || 'Not Found'; // Use 'Not Found' if no key exists
+
+                    // If an assistant key is found, make an API call
+                    if (assistantKey !== 'Not Found') {
+                        callOpenAI(assistantKey, userMessage);
+                    } else {
+                        displayMessage('Assistant key not found for the domain: ' + domain);
+                    }
+                });
+            });
 
             // Optionally clear the input after sending
             messageInput.value = '';
-
-            // Scroll to the bottom of the chat window
-            chatWindow.scrollTop = chatWindow.scrollHeight;
         }
     });
+
+    function callOpenAI(assistantId, userMessage) {
+        var data = {
+            assistant_id: assistantId,
+            thread: {
+                messages: [
+                    {role: "user", content: userMessage}
+                ]
+            }
+        };
+
+        fetch('https://api.openai.com/v1/threads/runs', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer sk-proj-R9QOIVUw8hvRHVKg2LccT3BlbkFJKPPxBiJLPNjmlSgl4mVy', // Replace this with your actual API key
+                'Content-Type': 'application/json',
+                'OpenAI-Beta': 'assistants=v2'
+            },
+            body: JSON.stringify(data)
+        }).then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                displayMessage('Error: ' + data.error.message);
+            } else {
+                const runId = data.id;
+                const threadId = data.thread_id;
+                pollForCompletion(threadId, runId);
+            }
+        });
+    }
+
+    function pollForCompletion(threadId, runId) {
+        const interval = setInterval(() => {
+            fetch(`https://api.openai.com/v1/threads/${threadId}/runs/${runId}`, {
+                headers: {
+                    'Authorization': 'Bearer sk-proj-R9QOIVUw8hvRHVKg2LccT3BlbkFJKPPxBiJLPNjmlSgl4mVy',
+                    'OpenAI-Beta': 'assistants=v2'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status !== 'queued' && data.status !== 'in_progress') {
+                    clearInterval(interval);
+                    if (data.status === 'completed') {
+                        fetchFinalMessage(threadId);
+                    }
+                }
+            });
+        }, 500); // Check every 0.5 seconds
+    }
+
+    function fetchFinalMessage(threadId) {
+        fetch(`https://api.openai.com/v1/threads/${threadId}/messages`, {
+            headers: {
+                'Authorization': 'Bearer sk-proj-R9QOIVUw8hvRHVKg2LccT3BlbkFJKPPxBiJLPNjmlSgl4mVy',
+                'OpenAI-Beta': 'assistants=v2'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const messages = data.data;
+            // get message with the latest created_at
+            const lastMessage = messages.reduce((acc, curr) => {
+                return acc.created_at > curr.created_at ? acc : curr;
+            });
+            displayMessage(lastMessage.content[0].text.value);
+            console.log('Final message:', lastMessage.content[0].text.value);
+        });
+    }
+
+    function displayMessage(message) {
+        var messageDiv = document.createElement('div');
+        messageDiv.textContent = message;
+        messageDiv.className = 'chatbox-message chatbox-response'; // Add class for styling
+        chatWindow.appendChild(messageDiv);
+        console.log('Message displayed:', message);
+        chatWindow.scrollTop = chatWindow.scrollHeight; // Scroll to the bottom of the chat window
+    }
 });
-
-function sendMessage() {
-    var input = document.querySelector('.chatbox-form-message');
-    var message = input.value.trim();
-    if (message) {
-        displayMessage(message, 'user');
-        // Here you could add your chatbot response logic
-        displayMessage('Echo: ' + message, 'bot'); // This is a placeholder
-    }
-    input.value = ''; // Clear input box
-    input.focus(); // Keep focus on input
-}
-
-function displayMessage(message, sender) {
-    var chatbox = document.querySelector('.chatbox-chat');
-    var msgDiv = document.createElement('div');
-    msgDiv.classList.add('message');
-    if (sender === 'user') {
-        msgDiv.classList.add('user');
-    } else {
-        msgDiv.classList.add('bot');
-    }
-    msgDiv.textContent = message;
-    chatbox.appendChild(msgDiv);
-    chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
-}
