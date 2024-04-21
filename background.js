@@ -46,7 +46,7 @@ chrome.action.onClicked.addListener((tab) => {
         } else {
             // Dummy API call to fetch assistant ID
             console.log(domain)
-            fetch(`https://bitcamp-chatbot-api-zywa.vercel.app/api/dummy-scrape-site/${domain}`)
+            fetch(`https://bitcamp-chatbot-api-zywa.vercel.app/api/scrape-site?url=${domain}`)
                 .then(response => response.json())
                 .then(data => {
                     const assistantId = data.message; // Assuming the API returns { message: "someAssistantId" }

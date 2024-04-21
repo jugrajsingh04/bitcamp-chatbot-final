@@ -42,12 +42,12 @@ if (!window.hasAddedCreationListener) {
 function createChatbotElements() {
     // Create and append iframe for chatbot modal
     var iframeModal = document.createElement('iframe');
-    setupIframe(iframeModal, 'modal-container', '100px', '20px', '320px', '460px', 'none');
+    setupIframe(iframeModal, 'modal-container', '100px', '20px', '322px', '462px', 'none');
     document.body.appendChild(iframeModal);
 
     // Create and append iframe for chatbot call button
     var iframeCall = document.createElement('iframe');
-    setupIframe(iframeCall, 'call-button-container', '450px', '350px', '54px', '54px', 'none');
+    setupIframe(iframeCall, 'call-button-container', '470px', '360px', '54px', '54px', 'none');
     document.body.appendChild(iframeCall);
 
     // Create and append iframe for chatbot trigger button

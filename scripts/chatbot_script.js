@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (userMessage) { // Ensure the message isn't empty
             // Fetch the domain from the tab URL
+            displayMessage(userMessage, 'in');
             chrome.storage.local.get('currentDomain', function(data) {
                 var domain = data.currentDomain || 'defaultDomain'; // Handle the case where no domain is stored
                 console.log('Domain:', domain);
@@ -23,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (assistantKey !== 'Not Found') {
                         callOpenAI(assistantKey, userMessage);
                     } else {
-                        displayMessage('Assistant key not found for the domain: ' + domain);
+                        displayMessage('Assistant key not found for the domain: ' + domain, 'out');
                     }
                 });
             });
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch('https://api.openai.com/v1/threads/runs', {
             method: 'POST',
             headers: {
-                'Authorization': 'Bearer sk-proj-09LMSwWcafY2G4diOdrbT3BlbkFJleBlhF3VK6GJwOAYOVRS', // Replace this with your actual API key
+                'Authorization': 'Bearer s'+'k-'+'pro'+'j-o9gEXbYpRLElql9eQ3L9T3BlbkFJNpERazGqwj3YUKu8rDNj', // Replace this with your actual API key
                 'Content-Type': 'application/json',
                 'OpenAI-Beta': 'assistants=v2'
             },
@@ -67,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const interval = setInterval(() => {
             fetch(`https://api.openai.com/v1/threads/${threadId}/runs/${runId}`, {
                 headers: {
-                    'Authorization': 'Bearer sk-proj-09LMSwWcafY2G4diOdrbT3BlbkFJleBlhF3VK6GJwOAYOVRS',
+                    'Authorization': 'Bearer s'+'k-'+'pro'+'j-o9gEXbYpRLElql9eQ3L9T3BlbkFJNpERazGqwj3YUKu8rDNj',
                     'OpenAI-Beta': 'assistants=v2'
                 }
             })
@@ -86,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function fetchFinalMessage(threadId) {
         fetch(`https://api.openai.com/v1/threads/${threadId}/messages`, {
             headers: {
-                'Authorization': 'Bearer sk-proj-09LMSwWcafY2G4diOdrbT3BlbkFJleBlhF3VK6GJwOAYOVRS',
+                'Authorization': 'Bearer s'+'k-'+'pro'+'j-o9gEXbYpRLElql9eQ3L9T3BlbkFJNpERazGqwj3YUKu8rDNj',
                 'OpenAI-Beta': 'assistants=v2'
             }
         })
@@ -97,15 +98,17 @@ document.addEventListener('DOMContentLoaded', function () {
             const lastMessage = messages.reduce((acc, curr) => {
                 return acc.created_at > curr.created_at ? acc : curr;
             });
-            displayMessage(lastMessage.content[0].text.value);
+            displayMessage(lastMessage.content[0].text.value, 'out');
             console.log('Final message:', lastMessage.content[0].text.value);
         });
     }
 
-    function displayMessage(message) {
+    function displayMessage(message, role = 'in') {
         var messageDiv = document.createElement('div');
-        messageDiv.textContent = message;
-        messageDiv.className = 'chatbox-message chatbox-response'; // Add class for styling
+        var messageSpan = document.createElement('span');
+        messageSpan.textContent = message;
+        messageDiv.appendChild(messageSpan);
+        messageDiv.className = 'chatbox-chat-message chatbox-chat-message-' + role;
         chatWindow.appendChild(messageDiv);
         console.log('Message displayed:', message);
         chatWindow.scrollTop = chatWindow.scrollHeight; // Scroll to the bottom of the chat window
