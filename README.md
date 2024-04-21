@@ -27,6 +27,4 @@ To load the extension into Chrome, follow these steps:
 After loading the extension, you should see the PocketBot Chatbot icon in your Chrome toolbar. Click on this icon to interact with the chatbot. Enter your queries, and the chatbot will respond accordingly.
 
 ## 🤝 Contributing
-Contributions are welcome! Please feel free to submit pull requests or create issues for bugs and feature requests.w
-
-
+Contributions are welcome! Please feel free to submit pull requests or create issues for bugs and feature requests.
